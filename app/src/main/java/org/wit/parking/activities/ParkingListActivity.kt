@@ -1,27 +1,27 @@
-package org.wit.placemark.activities
+package org.wit.parking.activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
-import org.wit.placemark.databinding.ActivityPlacemarkListBinding
-import org.wit.placemark.main.MainApp
-import org.wit.placemark.R
+import org.wit.parking.databinding.ActivityParkingListBinding
+import org.wit.parking.main.MainApp
+import org.wit.parking.R
 import android.view.Menu
 import android.view.MenuItem
-import org.wit.placemark.adapters.PlacemarkAdapter
-import org.wit.placemark.adapters.PlacemarkListener
-import org.wit.placemark.models.PlacemarkModel
+import org.wit.parking.adapters.ParkingAdapter
+import org.wit.parking.adapters.ParkingListener
+import org.wit.parking.models.ParkingModel
 
 
-class PlacemarkListActivity : AppCompatActivity(), PlacemarkListener {
+class ParkingListActivity : AppCompatActivity(), ParkingListener {
 
     lateinit var app: MainApp
-    private lateinit var binding: ActivityPlacemarkListBinding
+    private lateinit var binding: ActivityParkingListBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityPlacemarkListBinding.inflate(layoutInflater)
+        binding = ActivityParkingListBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         binding.toolbar.title = title
@@ -31,7 +31,7 @@ class PlacemarkListActivity : AppCompatActivity(), PlacemarkListener {
 
         val layoutManager = LinearLayoutManager(this)
         binding.recyclerView.layoutManager = layoutManager
-        binding.recyclerView.adapter = PlacemarkAdapter(app.placemarks.findAll(), this)
+        binding.recyclerView.adapter = ParkingAdapter(app.parkings.findAll(), this)
     }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
@@ -41,16 +41,16 @@ class PlacemarkListActivity : AppCompatActivity(), PlacemarkListener {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.item_add -> {
-                val launcherIntent = Intent(this, PlacemarkActivity::class.java)
+                val launcherIntent = Intent(this, ParkingActivity::class.java)
                 startActivityForResult(launcherIntent,0)
             }
         }
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onPlacemarkClick(placemark: PlacemarkModel) {
-        val launcherIntent = Intent(this, PlacemarkActivity::class.java)
-        launcherIntent.putExtra("placemark_edit", placemark)
+    override fun onParkingClick(parking: ParkingModel) {
+        val launcherIntent = Intent(this, ParkingActivity::class.java)
+        launcherIntent.putExtra("parking_edit", parking)
         startActivityForResult(launcherIntent,0)
     }
 
