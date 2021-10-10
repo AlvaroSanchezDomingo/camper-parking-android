@@ -41,11 +41,11 @@
                 android:orientation="vertical">
 
                 <EditText
-                    android:id="@+id/parkingTitle"
+                    android:id="@+id/username"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
                     android:layout_margin="8dp"
-                    android:hint="@string/hint_parkingTitle"
+                    android:hint="@string/hint_username"
                     android:inputType="text"
                     android:maxLength="25"
                     android:maxLines="1"
@@ -55,12 +55,25 @@
                     tools:ignore="TouchTargetSizeCheck" />
 
                 <EditText
-                    android:id="@+id/description"
+                    android:id="@+id/password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:hint="@string/hint_parkingDescription"
-                    android:inputType="text"
+                    android:hint="@string/hint_password"
+                    android:inputType="textPassword"
+                    android:maxLength="25"
+                    android:maxLines="1"
+                    android:minHeight="48dp"
+                    android:padding="8dp"
+                    android:textColor="@color/onLight"
+                    android:textSize="14sp" />
+                <EditText
+                    android:id="@+id/password_check"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:hint="@string/hint_password"
+                    android:inputType="textPassword"
                     android:maxLength="25"
                     android:maxLines="1"
                     android:minHeight="48dp"
@@ -69,25 +82,7 @@
                     android:textSize="14sp" />
 
                 <Button
-                    android:id="@+id/chooseImage"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
-                    android:background="@color/colorSecondary"
-                    android:paddingTop="8dp"
-                    android:paddingBottom="8dp"
-                    android:text="@string/button_addImage"
-                    android:textColor="@color/colorOnSecondary"
-                    android:textSize="16sp"
-                    tools:ignore="TextContrastCheck" />
-                <ImageView
-                    android:id="@+id/parkingImage"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@mipmap/ic_launcher"/>
-
-                <Button
-                    android:id="@+id/btnAdd"
+                    android:id="@+id/btnSignup"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
@@ -95,7 +90,7 @@
                     android:paddingTop="8dp"
                     android:paddingBottom="8dp"
                     android:stateListAnimator="@null"
-                    android:text="@string/button_addParking"
+                    android:text="@string/button_signup"
                     android:textColor="@color/colorOnSecondary"
                     android:textSize="16sp"
                     tools:ignore="TextContrastCheck" />

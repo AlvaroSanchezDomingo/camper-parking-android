@@ -31,7 +31,7 @@ class ParkingAdapter constructor(private var parkings: List<ParkingModel>, priva
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(parking: ParkingModel, listener: ParkingListener) {
-            binding.placemarkTitle.text = parking.title
+            binding.parkingTitle.text = parking.title
             binding.description.text = parking.description
             binding.root.setOnClickListener { listener.onParkingClick(parking) }
         }

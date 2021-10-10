@@ -30,6 +30,13 @@ class ParkingMemStore : ParkingStore {
             logAll()
         }
     }
+    override fun delete(parking: ParkingModel) {
+        var foundParking: ParkingModel? = parkings.find { p -> p.id == parking.id }
+        if (foundParking != null) {
+            parkings.removeAt(parkings.indexOf(foundParking))
+            logAll()
+        }
+    }
     fun logAll() {
         parkings.forEach{ i("${it}") }
     }

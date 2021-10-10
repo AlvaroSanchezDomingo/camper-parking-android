@@ -36,7 +36,7 @@ class ParkingActivity : AppCompatActivity() {
                             parking.image = result.data!!.data!!
                             Picasso.get()
                                 .load(parking.image)
-                                .into(binding.placemarkImage)
+                                .into(binding.parkingImage)
                         } // end of if
                     }
                     RESULT_CANCELED -> { } else -> { }
@@ -63,17 +63,17 @@ class ParkingActivity : AppCompatActivity() {
         if (intent.hasExtra("parking_edit")) {
             edit = true
             parking = intent.extras?.getParcelable("parking_edit")!!
-            binding.placemarkTitle.setText(parking.title)
+            binding.parkingTitle.setText(parking.title)
             binding.description.setText(parking.description)
             Picasso.get()
                 .load(parking.image)
-                .into(binding.placemarkImage)
-            binding.btnAdd.setText(R.string.button_savePlacemark)
+                .into(binding.parkingImage)
+            binding.btnAdd.setText(R.string.button_saveParking)
             binding.chooseImage.setText(R.string.button_changeImage)
         }
 
         binding.btnAdd.setOnClickListener() {
-            parking.title = binding.placemarkTitle.text.toString()
+            parking.title = binding.parkingTitle.text.toString()
             parking.description = binding.description.text.toString()
             if (parking.title.isNotEmpty()) {
                 if(edit){
@@ -95,12 +95,16 @@ class ParkingActivity : AppCompatActivity() {
         }
     }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_placemark, menu)
+        menuInflater.inflate(R.menu.menu_parking, menu)
         return super.onCreateOptionsMenu(menu)
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.item_cancel -> {
+                finish()
+            }
+            R.id.item_delete -> {
+                app.parkings.delete(parking.copy())
                 finish()
             }
         }

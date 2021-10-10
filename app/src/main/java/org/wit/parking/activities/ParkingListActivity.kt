@@ -12,8 +12,9 @@ import android.view.MenuItem
 import org.wit.parking.adapters.ParkingAdapter
 import org.wit.parking.adapters.ParkingListener
 import org.wit.parking.models.ParkingModel
+import timber.log.Timber.i
 
-
+//https://developer.android.com/reference/androidx/appcompat/app/AppCompatActivity
 class ParkingListActivity : AppCompatActivity(), ParkingListener {
 
     lateinit var app: MainApp
@@ -32,9 +33,11 @@ class ParkingListActivity : AppCompatActivity(), ParkingListener {
         val layoutManager = LinearLayoutManager(this)
         binding.recyclerView.layoutManager = layoutManager
         binding.recyclerView.adapter = ParkingAdapter(app.parkings.findAll(), this)
+
+
     }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_main, menu)
+        menuInflater.inflate(R.menu.menu_parking_list, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -42,6 +45,18 @@ class ParkingListActivity : AppCompatActivity(), ParkingListener {
         when (item.itemId) {
             R.id.item_add -> {
                 val launcherIntent = Intent(this, ParkingActivity::class.java)
+                startActivityForResult(launcherIntent,0)
+            }
+            R.id.item_profile -> {
+                i("item_profile")
+                val launcherIntent = Intent(this, SignupActivity::class.java)
+                launcherIntent.putExtra("user_edit", app.users.findById(app.loggedInUserId!!))
+                startActivityForResult(launcherIntent,0)
+            }
+            R.id.item_logout -> {
+                i("item_logout")
+                app.loggedInUserId = null
+                val launcherIntent = Intent(this, LoginActivity::class.java)
                 startActivityForResult(launcherIntent,0)
             }
         }
