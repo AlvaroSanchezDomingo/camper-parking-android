@@ -1,14 +1,24 @@
 <resources>
-    <string name="app_name">Placemark</string>
-    <string name="button_addPlacemark">Add Placemark</string>
-    <string name="button_savePlacemark">Save Placemark</string>
-    <string name="hint_placemarkTitle">Placemark Title</string>
-    <string name="hint_placemarkDescription">Description</string>
-    <string name="menu_addPlacemark">Add</string>
-    <string name="menu_cancelPlacemark">Cancel</string>
-    <string name="toast_enterTitle">Please Enter a title</string>
+    <string name="app_name">Camper Parking</string>
+    <string name="button_addParking">Add Parking</string>
+    <string name="button_saveParking">Save Parking</string>
+    <string name="hint_parkingTitle">Parking Title</string>
+    <string name="hint_parkingDescription">Description</string>
+    <string name="menu_addParking">Add</string>
+    <string name="menu_deleteParking">Delete</string>
+    <string name="menu_cancelParking">Cancel</string>
+    <string name="toast_enterTitle">Please enter a title</string>
+    <string name="toast_enterUsername">Please enter username</string>
+    <string name="toast_enterValidUserPassword">Please enter a valid username and password</string>
     <string name="button_addImage"> Add Image </string>
     <string name="button_changeImage"> Change Image </string>
-    <string name="select_placemark_image">Select placemark image</string>
-
+    <string name="select_parking_image">Select parking image</string>
+    <string name="hint_password">password</string>
+    <string name="hint_username">username</string>
+    <string name="button_login">Login</string>
+    <string name="button_signup">Signup</string>
+    <string name="menu_signup">Sign Up</string>
+    <string name="menu_login">Log In</string>
+    <string name="menu_logout">Log Out</string>
+    <string name="menu_profile">Profile</string>
 </resources>

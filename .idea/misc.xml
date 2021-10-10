@@ -3,6 +3,21 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/mobile-app/assignment1/camper-parking/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.265625" />
+        <entry key="..\:/mobile-app/assignment1/camper-parking/app/src/main/res/drawable/ic_launcher_background.xml" value="0.265625" />
+        <entry key="..\:/mobile-app/assignment1/camper-parking/app/src/main/res/layout/activity_login.xml" value="0.36666666666666664" />
+        <entry key="..\:/mobile-app/assignment1/camper-parking/app/src/main/res/layout/activity_parking.xml" value="0.30842391304347827" />
+        <entry key="..\:/mobile-app/assignment1/camper-parking/app/src/main/res/layout/activity_parking_list.xml" value="0.30842391304347827" />
+        <entry key="..\:/mobile-app/assignment1/camper-parking/app/src/main/res/layout/activity_placemark.xml" value="0.30842391304347827" />
+        <entry key="..\:/mobile-app/assignment1/camper-parking/app/src/main/res/layout/activity_placemark_list.xml" value="0.30842391304347827" />
+        <entry key="..\:/mobile-app/assignment1/camper-parking/app/src/main/res/layout/activity_signup.xml" value="0.36666666666666664" />
+        <entry key="..\:/mobile-app/assignment1/camper-parking/app/src/main/res/layout/card_parking.xml" value="0.30842391304347827" />
+        <entry key="..\:/mobile-app/assignment1/camper-parking/app/src/main/res/layout/card_placemark.xml" value="0.30842391304347827" />
+        <entry key="..\:/mobile-app/assignment1/camper-parking/app/src/main/res/menu/menu_authentication.xml" value="0.36666666666666664" />
+        <entry key="..\:/mobile-app/assignment1/camper-parking/app/src/main/res/menu/menu_main.xml" value="0.36666666666666664" />
+        <entry key="..\:/mobile-app/assignment1/camper-parking/app/src/main/res/menu/menu_parking.xml" value="0.33" />
+        <entry key="..\:/mobile-app/assignment1/camper-parking/app/src/main/res/menu/menu_parking_list.xml" value="0.36666666666666664" />
+        <entry key="..\:/mobile-app/assignment1/camper-parking/app/src/main/res/menu/menu_placemark.xml" value="0.36666666666666664" />
         <entry key="..\:/mobile-app/week02/placemark-01/app/src/main/res/layout/activity_placemark.xml" value="0.15555555555555556" />
         <entry key="..\:/mobile-app/week03/placemark-02/app/src/main/res/layout/activity_placemark.xml" value="0.1390625" />
         <entry key="..\:/mobile-app/week03/placemark-02/app/src/main/res/layout/activity_placemark_list.xml" value="0.11574074074074074" />

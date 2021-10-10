@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="org.wit.placemark.activities.PlacemarkActivity">
+    tools:context="org.wit.parking.activities.ParkingActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -17,7 +17,7 @@
             android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorAccent"
+            android:background="@color/colorPrimary"
             android:fitsSystemWindows="true"
             app:elevation="0dip"
             app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
@@ -41,16 +41,16 @@
                 android:orientation="vertical">
 
                 <EditText
-                    android:id="@+id/placemarkTitle"
+                    android:id="@+id/parkingTitle"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
                     android:layout_margin="8dp"
-                    android:hint="@string/hint_placemarkTitle"
+                    android:hint="@string/hint_parkingTitle"
                     android:inputType="text"
                     android:maxLength="25"
                     android:maxLines="1"
                     android:padding="8dp"
-                    android:textColor="@color/colorPrimaryDark"
+                    android:textColor="@color/onLight"
                     android:textSize="14sp"
                     tools:ignore="TouchTargetSizeCheck" />
 
@@ -59,12 +59,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:hint="@string/hint_placemarkDescription"
+                    android:hint="@string/hint_parkingDescription"
                     android:inputType="text"
                     android:maxLength="25"
                     android:maxLines="1"
+                    android:minHeight="48dp"
                     android:padding="8dp"
-                    android:textColor="@color/colorPrimaryDark"
+                    android:textColor="@color/onLight"
                     android:textSize="14sp" />
 
                 <Button
@@ -72,15 +73,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
-                    android:background="@color/colorAccent"
+                    android:background="@color/colorSecondary"
                     android:paddingTop="8dp"
                     android:paddingBottom="8dp"
                     android:text="@string/button_addImage"
-                    android:textColor="@color/colorPrimary"
+                    android:textColor="@color/colorOnSecondary"
                     android:textSize="16sp"
                     tools:ignore="TextContrastCheck" />
                 <ImageView
-                    android:id="@+id/placemarkImage"
+                    android:id="@+id/parkingImage"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:srcCompat="@mipmap/ic_launcher"/>
@@ -90,12 +91,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
-                    android:background="@color/colorAccent"
+                    android:background="@color/colorSecondary"
                     android:paddingTop="8dp"
                     android:paddingBottom="8dp"
                     android:stateListAnimator="@null"
-                    android:text="@string/button_addPlacemark"
-                    android:textColor="@color/colorPrimary"
+                    android:text="@string/button_addParking"
+                    android:textColor="@color/colorOnSecondary"
                     android:textSize="16sp"
                     tools:ignore="TextContrastCheck" />
 

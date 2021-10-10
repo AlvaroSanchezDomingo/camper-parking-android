@@ -1,15 +1,15 @@
-package org.wit.placemark.activities
+package org.wit.parking.activities
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
-import org.wit.placemark.R
-import org.wit.placemark.databinding.ActivityPlacemarkBinding
-import org.wit.placemark.models.PlacemarkModel
-import org.wit.placemark.helpers.showImagePicker
-import org.wit.placemark.main.MainApp
+import org.wit.parking.R
+import org.wit.parking.databinding.ActivityParkingBinding
+import org.wit.parking.models.ParkingModel
+import org.wit.parking.helpers.showImagePicker
+import org.wit.parking.main.MainApp
 import androidx.activity.result.ActivityResultLauncher
 import timber.log.Timber.i
 import android.view.MenuItem
@@ -17,11 +17,12 @@ import androidx.activity.result.contract.ActivityResultContracts
 import com.squareup.picasso.Picasso
 
 
-class PlacemarkActivity : AppCompatActivity() {
+//https://developer.android.com/reference/androidx/appcompat/app/AppCompatActivity
+class ParkingActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityPlacemarkBinding
+    private lateinit var binding: ActivityParkingBinding
     private lateinit var imageIntentLauncher : ActivityResultLauncher<Intent>
-    var placemark = PlacemarkModel()
+    var parking = ParkingModel()
     lateinit var app: MainApp
 
     private fun registerImagePickerCallback() {
@@ -32,10 +33,10 @@ class PlacemarkActivity : AppCompatActivity() {
                     RESULT_OK -> {
                         if (result.data != null) {
                             i("Got Result ${result.data!!.data}")
-                            placemark.image = result.data!!.data!!
+                            parking.image = result.data!!.data!!
                             Picasso.get()
-                                .load(placemark.image)
-                                .into(binding.placemarkImage)
+                                .load(parking.image)
+                                .into(binding.parkingImage)
                         } // end of if
                     }
                     RESULT_CANCELED -> { } else -> { }
@@ -50,7 +51,7 @@ class PlacemarkActivity : AppCompatActivity() {
 
         var edit = false
 
-        binding = ActivityPlacemarkBinding.inflate(layoutInflater)
+        binding = ActivityParkingBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         binding.toolbar.title = title
@@ -59,26 +60,26 @@ class PlacemarkActivity : AppCompatActivity() {
 
         app = application as MainApp
 
-        if (intent.hasExtra("placemark_edit")) {
+        if (intent.hasExtra("parking_edit")) {
             edit = true
-            placemark = intent.extras?.getParcelable("placemark_edit")!!
-            binding.placemarkTitle.setText(placemark.title)
-            binding.description.setText(placemark.description)
+            parking = intent.extras?.getParcelable("parking_edit")!!
+            binding.parkingTitle.setText(parking.title)
+            binding.description.setText(parking.description)
             Picasso.get()
-                .load(placemark.image)
-                .into(binding.placemarkImage)
-            binding.btnAdd.setText(R.string.button_savePlacemark)
+                .load(parking.image)
+                .into(binding.parkingImage)
+            binding.btnAdd.setText(R.string.button_saveParking)
             binding.chooseImage.setText(R.string.button_changeImage)
         }
 
         binding.btnAdd.setOnClickListener() {
-            placemark.title = binding.placemarkTitle.text.toString()
-            placemark.description = binding.description.text.toString()
-            if (placemark.title.isNotEmpty()) {
+            parking.title = binding.parkingTitle.text.toString()
+            parking.description = binding.description.text.toString()
+            if (parking.title.isNotEmpty()) {
                 if(edit){
-                    app.placemarks.update(placemark.copy())
+                    app.parkings.update(parking.copy())
                 }else{
-                    app.placemarks.create(placemark.copy())
+                    app.parkings.create(parking.copy())
                 }
                 setResult(RESULT_OK)
                 finish()
@@ -94,12 +95,16 @@ class PlacemarkActivity : AppCompatActivity() {
         }
     }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_placemark, menu)
+        menuInflater.inflate(R.menu.menu_parking, menu)
         return super.onCreateOptionsMenu(menu)
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.item_cancel -> {
+                finish()
+            }
+            R.id.item_delete -> {
+                app.parkings.delete(parking.copy())
                 finish()
             }
         }

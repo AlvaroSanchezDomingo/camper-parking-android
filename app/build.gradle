@@ -8,7 +8,7 @@ android {
     compileSdk 31
 
     defaultConfig {
-        applicationId "org.wit.placemark"
+        applicationId "org.wit.parking"
         minSdk 30
         targetSdk 31
         versionCode 1
