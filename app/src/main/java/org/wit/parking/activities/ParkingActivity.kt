@@ -1,13 +1,13 @@
 package org.wit.parking.activities
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import org.wit.parking.R
 import org.wit.parking.databinding.ActivityParkingBinding
-import org.wit.parking.models.ParkingModel
 import org.wit.parking.helpers.showImagePicker
 import org.wit.parking.main.MainApp
 import androidx.activity.result.ActivityResultLauncher
@@ -16,6 +16,7 @@ import android.view.MenuItem
 import androidx.activity.result.contract.ActivityResultContracts
 import com.squareup.picasso.Picasso
 import org.wit.parking.models.Location
+import org.wit.parking.models.ParkingModel
 
 
 class ParkingActivity : AppCompatActivity() {
@@ -24,8 +25,9 @@ class ParkingActivity : AppCompatActivity() {
     private lateinit var imageIntentLauncher : ActivityResultLauncher<Intent>
     private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
     var parking = ParkingModel()
+
+
     lateinit var app: MainApp
-    private var location = Location()
 
     private fun registerMapCallback() {
         mapIntentLauncher =
@@ -35,8 +37,11 @@ class ParkingActivity : AppCompatActivity() {
                     RESULT_OK -> {
                         if (result.data != null) {
                             i("Got Location ${result.data.toString()}")
-                            location = result.data!!.extras?.getParcelable("location")!!
+                            var location = result.data!!.extras?.getParcelable<Location>("location")!!
                             i("Location == $location")
+                            parking.lat = location.lat
+                            parking.lng = location.lng
+                            parking.zoom = location.zoom
                         } // end of if
                     }
                     RESULT_CANCELED -> { } else -> { }
@@ -88,7 +93,9 @@ class ParkingActivity : AppCompatActivity() {
                 .load(parking.image)
                 .into(binding.parkingImage)
             binding.btnAdd.setText(R.string.button_saveParking)
-            binding.chooseImage.setText(R.string.button_changeImage)
+            if (parking.image != Uri.EMPTY) {
+                binding.chooseImage.setText(R.string.button_changeImage)
+            }
         }
 
         binding.btnAdd.setOnClickListener() {
@@ -113,7 +120,14 @@ class ParkingActivity : AppCompatActivity() {
             showImagePicker(imageIntentLauncher)
         }
         binding.placemarkLocation.setOnClickListener {
-            location = Location(52.245696, -7.139102, 15f)
+
+            val location = Location(52.245696, -7.139102, 15f)
+            if (parking.zoom != 0f) {
+                location.lat =  parking.lat
+                location.lng = parking.lng
+                location.zoom = parking.zoom
+            }
+
             val launcherIntent = Intent(this, MapsActivity::class.java)
                 .putExtra("location", location)
             mapIntentLauncher.launch(launcherIntent)

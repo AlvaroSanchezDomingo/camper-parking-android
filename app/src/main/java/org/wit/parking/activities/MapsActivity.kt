@@ -14,7 +14,9 @@ import com.google.android.gms.maps.model.MarkerOptions
 import org.wit.parking.R
 import org.wit.parking.models.Location
 
-class MapsActivity : AppCompatActivity(), OnMapReadyCallback ,  GoogleMap.OnMarkerDragListener{
+class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
+    GoogleMap.OnMarkerDragListener,
+    GoogleMap.OnMarkerClickListener{
 
     private lateinit var map: GoogleMap
     var location = Location()
@@ -55,7 +57,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback ,  GoogleMap.OnMark
         location.lng = marker.position.longitude
         location.zoom = map.cameraPosition.zoom
     }
-
+    override fun onMarkerClick(marker: Marker): Boolean {
+        val loc = LatLng(location.lat, location.lng)
+        marker.snippet = "GPS : $loc"
+        return false
+    }
     override fun onBackPressed() {
         val resultIntent = Intent()
         resultIntent.putExtra("location", location)
