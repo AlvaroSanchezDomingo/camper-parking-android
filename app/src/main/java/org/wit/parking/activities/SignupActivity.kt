@@ -10,21 +10,30 @@ import org.wit.parking.databinding.ActivitySignupBinding
 import org.wit.parking.models.UserModel
 import org.wit.parking.main.MainApp
 import android.view.MenuItem
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 
 
-//https://developer.android.com/reference/androidx/appcompat/app/AppCompatActivity
 class SignupActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySignupBinding
     private var user = UserModel()
     lateinit var app: MainApp
 
+    //private lateinit var refreshIntentLauncher : ActivityResultLauncher<Intent>
+
+    //private fun registerRefreshCallback() {
+        //refreshIntentLauncher =
+            //registerForActivityResult(ActivityResultContracts.StartActivityForResult()){}
+    //}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
 
         var edit = false
+
+        //registerRefreshCallback()
 
         binding = ActivitySignupBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -69,8 +78,9 @@ class SignupActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.item_login -> {
-                val launcherIntent = Intent(this, LoginActivity::class.java)
-                startActivityForResult(launcherIntent,0)
+                //val launcherIntent = Intent(this, LoginActivity::class.java)
+                //refreshIntentLauncher.launch(launcherIntent)
+                finish()
             }
         }
         return super.onOptionsItemSelected(item)

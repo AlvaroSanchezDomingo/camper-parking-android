@@ -27,6 +27,9 @@ class ParkingMemStore : ParkingStore {
             foundParking.title = parking.title
             foundParking.description = parking.description
             foundParking.image = parking.image
+            foundParking.lat = parking.lat
+            foundParking.lng = parking.lng
+            foundParking.zoom = parking.zoom
             logAll()
         }
     }

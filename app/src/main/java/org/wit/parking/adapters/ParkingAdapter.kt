@@ -3,6 +3,7 @@ package org.wit.parking.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 import org.wit.parking.databinding.CardParkingBinding
 import org.wit.parking.models.ParkingModel
 
@@ -33,6 +34,7 @@ class ParkingAdapter constructor(private var parkings: List<ParkingModel>, priva
         fun bind(parking: ParkingModel, listener: ParkingListener) {
             binding.parkingTitle.text = parking.title
             binding.description.text = parking.description
+            Picasso.get().load(parking.image).resize(200,200).into(binding.imageIcon)
             binding.root.setOnClickListener { listener.onParkingClick(parking) }
         }
     }
