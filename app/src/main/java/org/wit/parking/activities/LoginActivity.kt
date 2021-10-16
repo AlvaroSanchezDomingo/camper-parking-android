@@ -10,23 +10,27 @@ import org.wit.parking.databinding.ActivityLoginBinding
 import org.wit.parking.models.UserModel
 import org.wit.parking.main.MainApp
 import android.view.MenuItem
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 
 
-
-//https://developer.android.com/reference/androidx/appcompat/app/AppCompatActivity
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
     var user = UserModel()
     lateinit var app: MainApp
+    private lateinit var refreshIntentLauncher : ActivityResultLauncher<Intent>
 
+    private fun registerRefreshCallback() {
+        refreshIntentLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()){}
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
 
-        var edit = false
-
+        registerRefreshCallback()
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -44,7 +48,7 @@ class LoginActivity : AppCompatActivity() {
                 if(authenticated){
                     app.loggedInUserId = user.id
                     val launcherIntent = Intent(this, ParkingListActivity::class.java)
-                    startActivityForResult(launcherIntent,0)
+                    refreshIntentLauncher.launch(launcherIntent)
                 }else{
                     Snackbar.make(it,R.string.toast_enterValidUserPassword, Snackbar.LENGTH_LONG).show()
                     binding.username.setText("")
@@ -65,7 +69,7 @@ class LoginActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.item_signup -> {
                 val launcherIntent = Intent(this, SignupActivity::class.java)
-                startActivityForResult(launcherIntent,0)
+                refreshIntentLauncher.launch(launcherIntent)
             }
         }
         return super.onOptionsItemSelected(item)

@@ -15,16 +15,34 @@ import timber.log.Timber.i
 import android.view.MenuItem
 import androidx.activity.result.contract.ActivityResultContracts
 import com.squareup.picasso.Picasso
+import org.wit.parking.models.Location
 
 
-//https://developer.android.com/reference/androidx/appcompat/app/AppCompatActivity
 class ParkingActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityParkingBinding
     private lateinit var imageIntentLauncher : ActivityResultLauncher<Intent>
+    private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
     var parking = ParkingModel()
     lateinit var app: MainApp
+    private var location = Location()
 
+    private fun registerMapCallback() {
+        mapIntentLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult())
+            { result ->
+                when (result.resultCode) {
+                    RESULT_OK -> {
+                        if (result.data != null) {
+                            i("Got Location ${result.data.toString()}")
+                            location = result.data!!.extras?.getParcelable("location")!!
+                            i("Location == $location")
+                        } // end of if
+                    }
+                    RESULT_CANCELED -> { } else -> { }
+                }
+            }
+    }
     private fun registerImagePickerCallback() {
         imageIntentLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult())
@@ -48,6 +66,7 @@ class ParkingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         registerImagePickerCallback()
+        registerMapCallback()
 
         var edit = false
 
@@ -92,6 +111,12 @@ class ParkingActivity : AppCompatActivity() {
         }
         binding.chooseImage.setOnClickListener() {
             showImagePicker(imageIntentLauncher)
+        }
+        binding.placemarkLocation.setOnClickListener {
+            location = Location(52.245696, -7.139102, 15f)
+            val launcherIntent = Intent(this, MapsActivity::class.java)
+                .putExtra("location", location)
+            mapIntentLauncher.launch(launcherIntent)
         }
     }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
