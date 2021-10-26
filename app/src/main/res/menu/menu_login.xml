@@ -5,9 +5,5 @@
         android:id="@+id/item_signup"
         android:title="@string/menu_signup"
         app:showAsAction="always" />
-    <item
-        android:id="@+id/item_login"
-        android:title="@string/menu_login"
-        app:showAsAction="always" />
 
 </menu>

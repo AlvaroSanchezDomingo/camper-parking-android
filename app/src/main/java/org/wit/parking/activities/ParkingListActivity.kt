@@ -25,15 +25,13 @@ class ParkingListActivity : AppCompatActivity(), ParkingListener {
     private fun registerRefreshCallback() {
         refreshIntentLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult())
-            { binding.recyclerView.adapter?.notifyDataSetChanged() }
+            { loadParkings() }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityParkingListBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        registerRefreshCallback()
 
         binding.toolbar.title = title
         setSupportActionBar(binding.toolbar)
@@ -42,9 +40,10 @@ class ParkingListActivity : AppCompatActivity(), ParkingListener {
 
         val layoutManager = LinearLayoutManager(this)
         binding.recyclerView.layoutManager = layoutManager
-        binding.recyclerView.adapter = ParkingAdapter(app.parkings.findAll(), this)
+        loadParkings()
 
 
+        registerRefreshCallback()
     }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_parking_list, menu)
@@ -78,6 +77,15 @@ class ParkingListActivity : AppCompatActivity(), ParkingListener {
         launcherIntent.putExtra("parking_edit", parking)
         refreshIntentLauncher.launch(launcherIntent)
     }
+    private fun loadParkings() {
+        showParkings(app.parkings.findAll())
+    }
+
+    fun showParkings (placemarks: List<ParkingModel>) {
+        binding.recyclerView.adapter = ParkingAdapter(placemarks, this)
+        binding.recyclerView.adapter?.notifyDataSetChanged()
+    }
+
 
 }
 

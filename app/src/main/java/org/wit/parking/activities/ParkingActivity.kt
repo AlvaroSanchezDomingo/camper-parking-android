@@ -92,7 +92,7 @@ class ParkingActivity : AppCompatActivity() {
             Picasso.get()
                 .load(parking.image)
                 .into(binding.parkingImage)
-            binding.btnAdd.setText(R.string.button_saveParking)
+            binding.btnAdd.setText(R.string.button_update)
             if (parking.image != Uri.EMPTY) {
                 binding.chooseImage.setText(R.string.button_changeImage)
             }

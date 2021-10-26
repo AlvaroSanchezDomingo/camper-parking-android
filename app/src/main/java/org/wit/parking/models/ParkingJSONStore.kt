@@ -34,29 +34,29 @@ class ParkingJSONStore(private val context: Context) : ParkingStore {
         return parkings
     }
 
-    override fun create(placemark: ParkingModel) {
-        placemark.id = generateRandomId()
-        parkings.add(placemark)
+    override fun create(parking: ParkingModel) {
+        parking.id = generateRandomId()
+        parkings.add(parking)
         serialize()
     }
 
 
-    override fun update(placemark: ParkingModel) {
+    override fun update(parking: ParkingModel) {
         val parkingsList = findAll() as ArrayList<ParkingModel>
-        var foundParking: ParkingModel? = parkingsList.find { p -> p.id == placemark.id }
+        var foundParking: ParkingModel? = parkingsList.find { p -> p.id == parking.id }
         if (foundParking != null) {
-            foundParking.title = placemark.title
-            foundParking.description = placemark.description
-            foundParking.image = placemark.image
-            foundParking.lat = placemark.lat
-            foundParking.lng = placemark.lng
-            foundParking.zoom = placemark.zoom
+            foundParking.title = parking.title
+            foundParking.description = parking.description
+            foundParking.image = parking.image
+            foundParking.lat = parking.lat
+            foundParking.lng = parking.lng
+            foundParking.zoom = parking.zoom
         }
         serialize()
     }
 
-    override fun delete(placemark: ParkingModel) {
-        parkings.remove(placemark)
+    override fun delete(parking: ParkingModel) {
+        parkings.remove(parking)
         serialize()
     }
 

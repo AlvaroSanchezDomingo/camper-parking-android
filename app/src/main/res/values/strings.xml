@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">Camper Parking</string>
-    <string name="button_addParking">Add Parking</string>
-    <string name="button_saveParking">Save Parking</string>
+
     <string name="hint_parkingTitle">Parking Title</string>
     <string name="hint_parkingDescription">Description</string>
     <string name="hint_password">password</string>
@@ -21,7 +20,14 @@
     <string name="button_location">Set Location</string>
     <string name="button_login">Login</string>
     <string name="button_signup">Signup</string>
+    <string name="button_addParking">Add Parking</string>
+    <string name="button_update">Update</string>
+
+
     <string name="select_parking_image">Select parking image</string>
     <string name="title_activity_maps">MapsActivity</string>
+    <string name="toast_passwordNoMatch">Please, make sure the password matches</string>
+    <string name="menu_back">Back</string>
+
 
 </resources>
