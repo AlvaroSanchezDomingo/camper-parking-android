@@ -59,12 +59,12 @@ class ParkingListActivity : AppCompatActivity(), ParkingListener {
             R.id.item_profile -> {
                 i("item_profile")
                 val launcherIntent = Intent(this, SignupActivity::class.java)
-                launcherIntent.putExtra("user_edit", app.users.findById(app.loggedInUserId!!))
+                launcherIntent.putExtra("user_edit", app.parkings.findByUsername(app.loggedInUser!!))
                 refreshIntentLauncher.launch(launcherIntent)
             }
             R.id.item_logout -> {
                 i("item_logout")
-                app.loggedInUserId = null
+                app.loggedInUser = null
                 val launcherIntent = Intent(this, LoginActivity::class.java)
                 refreshIntentLauncher.launch(launcherIntent)
             }

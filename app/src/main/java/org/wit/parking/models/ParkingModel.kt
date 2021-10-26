@@ -6,6 +6,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class ParkingModel(var id: Long = 0,
+                        var username:String = "",
                         var title: String = "",
                         var description: String = "",
                         var image: Uri = Uri.EMPTY,
@@ -17,3 +18,7 @@ data class ParkingModel(var id: Long = 0,
 data class Location(  var lat: Double = 0.0,
                       var lng: Double = 0.0,
                       var zoom: Float = 0f) : Parcelable
+
+@Parcelize
+data class UserModel(var username: String = "",
+                     var password: String = "") : Parcelable

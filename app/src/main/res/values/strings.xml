@@ -28,6 +28,7 @@
     <string name="title_activity_maps">MapsActivity</string>
     <string name="toast_passwordNoMatch">Please, make sure the password matches</string>
     <string name="menu_back">Back</string>
+    <string name="toast_userExist">User already exist</string>
 
 
 </resources>

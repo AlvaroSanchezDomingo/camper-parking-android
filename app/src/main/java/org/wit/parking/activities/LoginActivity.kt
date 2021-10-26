@@ -7,11 +7,12 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import org.wit.parking.R
 import org.wit.parking.databinding.ActivityLoginBinding
-import org.wit.parking.models.UserModel
 import org.wit.parking.main.MainApp
 import android.view.MenuItem
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import org.wit.parking.models.UserModel
+import timber.log.Timber
 
 
 class LoginActivity : AppCompatActivity() {
@@ -44,9 +45,11 @@ class LoginActivity : AppCompatActivity() {
             user.username = binding.username.text.toString()
             user.password = binding.password.text.toString()
             if (user.username.isNotEmpty()) {
-                val authenticated:Boolean = app.users.authenticate(user.copy())
-                if(authenticated){
-                    app.loggedInUserId = user.id
+                val authenticatedUser:UserModel? = app.parkings.authenticate(user.copy())
+
+                if(authenticatedUser != null){
+                    app.loggedInUser = authenticatedUser.username
+                    Timber.i("Authentication: ${app.loggedInUser}")
                     val launcherIntent = Intent(this, ParkingListActivity::class.java)
                     refreshIntentLauncher.launch(launcherIntent)
                 }else{
