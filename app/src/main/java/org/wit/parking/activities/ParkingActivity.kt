@@ -17,6 +17,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import com.squareup.picasso.Picasso
 import org.wit.parking.models.Location
 import org.wit.parking.models.ParkingModel
+import timber.log.Timber
 
 
 class ParkingActivity : AppCompatActivity() {
@@ -101,10 +102,13 @@ class ParkingActivity : AppCompatActivity() {
         binding.btnAdd.setOnClickListener() {
             parking.title = binding.parkingTitle.text.toString()
             parking.description = binding.description.text.toString()
+
             if (parking.title.isNotEmpty()) {
                 if(edit){
                     app.parkings.update(parking.copy())
                 }else{
+                    parking.username = app.loggedInUser!!
+                    i("Parking User: ${parking.username}")
                     app.parkings.create(parking.copy())
                 }
                 setResult(RESULT_OK)

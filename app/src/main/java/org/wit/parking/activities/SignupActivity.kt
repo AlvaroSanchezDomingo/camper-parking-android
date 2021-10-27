@@ -1,17 +1,14 @@
 package org.wit.parking.activities
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import org.wit.parking.R
 import org.wit.parking.databinding.ActivitySignupBinding
-import org.wit.parking.models.UserModel
 import org.wit.parking.main.MainApp
 import android.view.MenuItem
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
+import org.wit.parking.models.UserModel
 
 
 class SignupActivity : AppCompatActivity() {
@@ -54,12 +51,19 @@ class SignupActivity : AppCompatActivity() {
             if (user.username.isNotEmpty() && user.password.isNotEmpty()) {
                 if (user.password == passwordCheck) {
                     if(edit){
-                        app.users.update(user.copy())
+                        app.parkings.update(user.copy())
+                        setResult(RESULT_OK)
+                        finish()
                     }else{
-                        app.users.create(user.copy())
+                        val isUserCreated = app.parkings.create(user.copy())
+                        if(isUserCreated){
+                            setResult(RESULT_OK)
+                            finish()
+                        }else{
+                            Snackbar.make(it,R.string.toast_userExist, Snackbar.LENGTH_LONG).show()
+                        }
                     }
-                    setResult(RESULT_OK)
-                    finish()
+
                 }else {
                     Snackbar.make(it,R.string.toast_passwordNoMatch, Snackbar.LENGTH_LONG).show()
                 }
