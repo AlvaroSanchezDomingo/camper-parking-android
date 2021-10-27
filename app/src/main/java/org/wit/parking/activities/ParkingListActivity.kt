@@ -8,9 +8,12 @@ import org.wit.parking.databinding.ActivityParkingListBinding
 import org.wit.parking.main.MainApp
 import org.wit.parking.R
 import android.view.Menu
+import android.view.MenuInflater
 import android.view.MenuItem
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.navigation.findNavController
+import androidx.navigation.ui.NavigationUI
 import org.wit.parking.adapters.ParkingAdapter
 import org.wit.parking.adapters.ParkingListener
 import org.wit.parking.models.ParkingModel
@@ -51,6 +54,7 @@ class ParkingListActivity : AppCompatActivity(), ParkingListener {
         registerRefreshCallback()
         registerMapCallback()
     }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_parking_list, menu)
         return super.onCreateOptionsMenu(menu)

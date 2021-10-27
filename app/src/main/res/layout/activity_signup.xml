@@ -17,16 +17,16 @@
             android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:fitsSystemWindows="true"
-            app:elevation="0dip"
-            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+            app:theme="@style/Theme.CamperApp.AppBarOverlay">
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:titleTextColor="@color/colorPrimary" />
+                android:background="?attr/colorPrimary"
+                android:textColor="?attr/colorOnSecondary"
+                app:popupTheme="@style/Theme.CamperApp.PopupOverlay"/>
+
         </com.google.android.material.appbar.AppBarLayout>
 
         <ScrollView
@@ -50,7 +50,6 @@
                     android:maxLength="25"
                     android:maxLines="1"
                     android:padding="8dp"
-                    android:textColor="@color/onLight"
                     android:textSize="14sp"
                     tools:ignore="TouchTargetSizeCheck" />
 
@@ -65,7 +64,6 @@
                     android:maxLines="1"
                     android:minHeight="48dp"
                     android:padding="8dp"
-                    android:textColor="@color/onLight"
                     android:textSize="14sp" />
                 <EditText
                     android:id="@+id/password_check"
@@ -78,7 +76,6 @@
                     android:maxLines="1"
                     android:minHeight="48dp"
                     android:padding="8dp"
-                    android:textColor="@color/onLight"
                     android:textSize="14sp" />
 
                 <Button
@@ -86,12 +83,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
-                    android:background="@color/colorSecondary"
                     android:paddingTop="8dp"
                     android:paddingBottom="8dp"
                     android:stateListAnimator="@null"
                     android:text="@string/button_signup"
-                    android:textColor="@color/colorOnSecondary"
                     android:textSize="16sp"
                     tools:ignore="TextContrastCheck" />
 
