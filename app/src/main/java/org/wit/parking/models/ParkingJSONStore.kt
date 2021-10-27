@@ -40,7 +40,13 @@ class ParkingJSONStore(private val context: Context) : ParkingStore {
         logAllParkings()
         return parkings
     }
-
+    override fun findParkingById(id:Long): ParkingModel? {
+        var foundParking: ParkingModel? = parkings.find { p -> p.id == id }
+        if (foundParking != null) {
+            return foundParking
+        }
+        return null
+    }
     override fun create(parking: ParkingModel) {
         parking.id = generateRandomId()
         parkings.add(parking)

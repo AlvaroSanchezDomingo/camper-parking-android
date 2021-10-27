@@ -12,6 +12,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Parking">
+        <activity
+            android:name=".activities.ParkingMapsActivity"
+            android:exported="true"
+            android:label="@string/title_activity_parking_maps"
+            android:theme="@style/Theme.Parking.NoActionBar" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -30,9 +35,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.SignupActivity"></activity>
-        <activity android:name=".activities.ParkingListActivity"></activity>
-        <activity android:name=".activities.ParkingActivity"></activity>
+        <activity android:name=".activities.SignupActivity" />
+        <activity android:name=".activities.ParkingListActivity" />
+        <activity android:name=".activities.ParkingActivity" />
     </application>
 
 </manifest>

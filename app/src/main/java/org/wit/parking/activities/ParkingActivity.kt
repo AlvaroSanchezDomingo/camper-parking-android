@@ -60,6 +60,7 @@ class ParkingActivity : AppCompatActivity() {
                             parking.image = result.data!!.data!!
                             Picasso.get()
                                 .load(parking.image)
+                                .resize(500,500)
                                 .into(binding.parkingImage)
                         } // end of if
                     }
@@ -92,6 +93,7 @@ class ParkingActivity : AppCompatActivity() {
             binding.description.setText(parking.description)
             Picasso.get()
                 .load(parking.image)
+                .resize(500,500)
                 .into(binding.parkingImage)
             binding.btnAdd.setText(R.string.button_update)
             if (parking.image != Uri.EMPTY) {

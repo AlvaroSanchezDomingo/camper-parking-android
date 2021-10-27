@@ -21,13 +21,18 @@ class ParkingListActivity : AppCompatActivity(), ParkingListener {
     lateinit var app: MainApp
     private lateinit var binding: ActivityParkingListBinding
     private lateinit var refreshIntentLauncher : ActivityResultLauncher<Intent>
+    private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
 
     private fun registerRefreshCallback() {
         refreshIntentLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult())
             { loadParkings() }
     }
-
+    private fun registerMapCallback() {
+        mapIntentLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult())
+            {  }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityParkingListBinding.inflate(layoutInflater)
@@ -44,6 +49,7 @@ class ParkingListActivity : AppCompatActivity(), ParkingListener {
 
 
         registerRefreshCallback()
+        registerMapCallback()
     }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_parking_list, menu)
@@ -52,6 +58,11 @@ class ParkingListActivity : AppCompatActivity(), ParkingListener {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+            R.id.item_map -> {
+                val launcherIntent = Intent(this, ParkingMapsActivity::class.java)
+                mapIntentLauncher.launch(launcherIntent)
+            }
+
             R.id.item_add -> {
                 val launcherIntent = Intent(this, ParkingActivity::class.java)
                 refreshIntentLauncher.launch(launcherIntent)
@@ -81,11 +92,11 @@ class ParkingListActivity : AppCompatActivity(), ParkingListener {
         showParkings(app.parkings.findAll())
     }
 
-    fun showParkings (placemarks: List<ParkingModel>) {
-        binding.recyclerView.adapter = ParkingAdapter(placemarks, this)
+    fun showParkings (parkings: List<ParkingModel>) {
+        i("All parkings $parkings")
+        binding.recyclerView.adapter = ParkingAdapter(parkings, this)
         binding.recyclerView.adapter?.notifyDataSetChanged()
     }
-
 
 }
 
