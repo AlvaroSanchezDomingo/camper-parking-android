@@ -1,17 +1,14 @@
 package org.wit.parking.activities
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import org.wit.parking.R
 import org.wit.parking.databinding.ActivitySignupBinding
-import org.wit.parking.models.UserModel
 import org.wit.parking.main.MainApp
 import android.view.MenuItem
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
+import org.wit.parking.models.UserModel
 
 
 class SignupActivity : AppCompatActivity() {
@@ -20,20 +17,12 @@ class SignupActivity : AppCompatActivity() {
     private var user = UserModel()
     lateinit var app: MainApp
 
-    //private lateinit var refreshIntentLauncher : ActivityResultLauncher<Intent>
-
-    //private fun registerRefreshCallback() {
-        //refreshIntentLauncher =
-            //registerForActivityResult(ActivityResultContracts.StartActivityForResult()){}
-    //}
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
 
         var edit = false
 
-        //registerRefreshCallback()
 
         binding = ActivitySignupBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -48,22 +37,36 @@ class SignupActivity : AppCompatActivity() {
         if (intent.hasExtra("user_edit")) {
             edit = true
             user = intent.extras?.getParcelable("user_edit")!!
-            binding.username.setText(user!!.username)
-            binding.password.setText(user!!.password)
+            binding.username.setText(user.username)
+            binding.btnSignup.setText(R.string.button_update)
+
         }
 
 
         binding.btnSignup.setOnClickListener {
-            user!!.username = binding.username.text.toString()
-            user!!.password = binding.password.text.toString()
-            if (user!!.username.isNotEmpty() && user!!.password.isNotEmpty()) {
-                if(edit){
-                    app.users.update(user!!.copy())
-                }else{
-                    app.users.create(user!!.copy())
+            user.username = binding.username.text.toString()
+            user.password = binding.password.text.toString()
+            val passwordCheck = binding.passwordCheck.text.toString()
+
+            if (user.username.isNotEmpty() && user.password.isNotEmpty()) {
+                if (user.password == passwordCheck) {
+                    if(edit){
+                        app.parkings.update(user.copy())
+                        setResult(RESULT_OK)
+                        finish()
+                    }else{
+                        val isUserCreated = app.parkings.create(user.copy())
+                        if(isUserCreated){
+                            setResult(RESULT_OK)
+                            finish()
+                        }else{
+                            Snackbar.make(it,R.string.toast_userExist, Snackbar.LENGTH_LONG).show()
+                        }
+                    }
+
+                }else {
+                    Snackbar.make(it,R.string.toast_passwordNoMatch, Snackbar.LENGTH_LONG).show()
                 }
-                setResult(RESULT_OK)
-                finish()
             }
             else {
                 Snackbar.make(it,R.string.toast_enterUsername, Snackbar.LENGTH_LONG).show()
@@ -72,14 +75,12 @@ class SignupActivity : AppCompatActivity() {
 
     }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_authentication, menu)
+        menuInflater.inflate(R.menu.menu_signup, menu)
         return super.onCreateOptionsMenu(menu)
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.item_login -> {
-                //val launcherIntent = Intent(this, LoginActivity::class.java)
-                //refreshIntentLauncher.launch(launcherIntent)
+            R.id.item_back -> {
                 finish()
             }
         }

@@ -17,6 +17,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import com.squareup.picasso.Picasso
 import org.wit.parking.models.Location
 import org.wit.parking.models.ParkingModel
+import timber.log.Timber
 
 
 class ParkingActivity : AppCompatActivity() {
@@ -59,6 +60,7 @@ class ParkingActivity : AppCompatActivity() {
                             parking.image = result.data!!.data!!
                             Picasso.get()
                                 .load(parking.image)
+                                .resize(500,500)
                                 .into(binding.parkingImage)
                         } // end of if
                     }
@@ -91,8 +93,9 @@ class ParkingActivity : AppCompatActivity() {
             binding.description.setText(parking.description)
             Picasso.get()
                 .load(parking.image)
+                .resize(500,500)
                 .into(binding.parkingImage)
-            binding.btnAdd.setText(R.string.button_saveParking)
+            binding.btnAdd.setText(R.string.button_update)
             if (parking.image != Uri.EMPTY) {
                 binding.chooseImage.setText(R.string.button_changeImage)
             }
@@ -101,10 +104,13 @@ class ParkingActivity : AppCompatActivity() {
         binding.btnAdd.setOnClickListener() {
             parking.title = binding.parkingTitle.text.toString()
             parking.description = binding.description.text.toString()
+
             if (parking.title.isNotEmpty()) {
                 if(edit){
                     app.parkings.update(parking.copy())
                 }else{
+                    parking.username = app.loggedInUser!!
+                    i("Parking User: ${parking.username}")
                     app.parkings.create(parking.copy())
                 }
                 setResult(RESULT_OK)

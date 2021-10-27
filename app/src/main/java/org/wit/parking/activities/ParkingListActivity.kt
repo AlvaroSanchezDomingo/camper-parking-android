@@ -21,19 +21,22 @@ class ParkingListActivity : AppCompatActivity(), ParkingListener {
     lateinit var app: MainApp
     private lateinit var binding: ActivityParkingListBinding
     private lateinit var refreshIntentLauncher : ActivityResultLauncher<Intent>
+    private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
 
     private fun registerRefreshCallback() {
         refreshIntentLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult())
-            { binding.recyclerView.adapter?.notifyDataSetChanged() }
+            { loadParkings() }
     }
-
+    private fun registerMapCallback() {
+        mapIntentLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult())
+            {  }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityParkingListBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        registerRefreshCallback()
 
         binding.toolbar.title = title
         setSupportActionBar(binding.toolbar)
@@ -42,9 +45,11 @@ class ParkingListActivity : AppCompatActivity(), ParkingListener {
 
         val layoutManager = LinearLayoutManager(this)
         binding.recyclerView.layoutManager = layoutManager
-        binding.recyclerView.adapter = ParkingAdapter(app.parkings.findAll(), this)
+        loadParkings()
 
 
+        registerRefreshCallback()
+        registerMapCallback()
     }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_parking_list, menu)
@@ -53,6 +58,11 @@ class ParkingListActivity : AppCompatActivity(), ParkingListener {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+            R.id.item_map -> {
+                val launcherIntent = Intent(this, ParkingMapsActivity::class.java)
+                mapIntentLauncher.launch(launcherIntent)
+            }
+
             R.id.item_add -> {
                 val launcherIntent = Intent(this, ParkingActivity::class.java)
                 refreshIntentLauncher.launch(launcherIntent)
@@ -60,12 +70,12 @@ class ParkingListActivity : AppCompatActivity(), ParkingListener {
             R.id.item_profile -> {
                 i("item_profile")
                 val launcherIntent = Intent(this, SignupActivity::class.java)
-                launcherIntent.putExtra("user_edit", app.users.findById(app.loggedInUserId!!))
+                launcherIntent.putExtra("user_edit", app.parkings.findByUsername(app.loggedInUser!!))
                 refreshIntentLauncher.launch(launcherIntent)
             }
             R.id.item_logout -> {
                 i("item_logout")
-                app.loggedInUserId = null
+                app.loggedInUser = null
                 val launcherIntent = Intent(this, LoginActivity::class.java)
                 refreshIntentLauncher.launch(launcherIntent)
             }
@@ -77,6 +87,15 @@ class ParkingListActivity : AppCompatActivity(), ParkingListener {
         val launcherIntent = Intent(this, ParkingActivity::class.java)
         launcherIntent.putExtra("parking_edit", parking)
         refreshIntentLauncher.launch(launcherIntent)
+    }
+    private fun loadParkings() {
+        showParkings(app.parkings.findAll())
+    }
+
+    fun showParkings (parkings: List<ParkingModel>) {
+        i("All parkings $parkings")
+        binding.recyclerView.adapter = ParkingAdapter(parkings, this)
+        binding.recyclerView.adapter?.notifyDataSetChanged()
     }
 
 }

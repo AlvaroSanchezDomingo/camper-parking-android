@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import org.wit.parking.databinding.CardParkingBinding
 import org.wit.parking.models.ParkingModel
+import timber.log.Timber
 
 
 interface ParkingListener {
@@ -34,7 +35,12 @@ class ParkingAdapter constructor(private var parkings: List<ParkingModel>, priva
         fun bind(parking: ParkingModel, listener: ParkingListener) {
             binding.parkingTitle.text = parking.title
             binding.description.text = parking.description
-            Picasso.get().load(parking.image).resize(200,200).into(binding.imageIcon)
+            binding.username.text = parking.username
+            Timber.i("image in adapter: ${parking.image}")
+            Picasso.get()
+                .load(parking.image)
+                .resize(200,200)
+                .into(binding.imageIcon)
             binding.root.setOnClickListener { listener.onParkingClick(parking) }
         }
     }

@@ -9,11 +9,13 @@ import timber.log.Timber
 import java.lang.reflect.Type
 import java.util.*
 
-const val JSON_FILE = "parking.json"
+const val JSON_FILE_PARKING = "parking.json"
+const val JSON_FILE_USER = "user.json"
 val gsonBuilder: Gson = GsonBuilder().setPrettyPrinting()
                  .registerTypeAdapter(Uri::class.java, UriParser())
                  .create()
-val listType: Type = object : TypeToken<ArrayList<ParkingModel>>() {}.type
+val listTypeParking: Type = object : TypeToken<ArrayList<ParkingModel>>() {}.type
+val listTypeUser: Type = object : TypeToken<ArrayList<UserModel>>() {}.type
 
 fun generateRandomId(): Long {
     return Random().nextLong()
@@ -22,58 +24,137 @@ fun generateRandomId(): Long {
 class ParkingJSONStore(private val context: Context) : ParkingStore {
 
     var parkings = mutableListOf<ParkingModel>()
+    var users = mutableListOf<UserModel>()
 
     init {
-        if (exists(context, JSON_FILE)) {
+        if (exists(context, JSON_FILE_PARKING)) {
             deserialize()
         }
+        if (exists(context, JSON_FILE_USER)) {
+            deserializeUsers()
+        }
     }
 
+    //PARKINGS
     override fun findAll(): MutableList<ParkingModel> {
-        logAll()
+        logAllParkings()
         return parkings
     }
-
-    override fun create(placemark: ParkingModel) {
-        placemark.id = generateRandomId()
-        parkings.add(placemark)
+    override fun findParkingById(id:Long): ParkingModel? {
+        var foundParking: ParkingModel? = parkings.find { p -> p.id == id }
+        if (foundParking != null) {
+            return foundParking
+        }
+        return null
+    }
+    override fun create(parking: ParkingModel) {
+        parking.id = generateRandomId()
+        parkings.add(parking)
         serialize()
     }
 
 
-    override fun update(placemark: ParkingModel) {
+    override fun update(parking: ParkingModel) {
         val parkingsList = findAll() as ArrayList<ParkingModel>
-        var foundParking: ParkingModel? = parkingsList.find { p -> p.id == placemark.id }
+        var foundParking: ParkingModel? = parkingsList.find { p -> p.id == parking.id }
         if (foundParking != null) {
-            foundParking.title = placemark.title
-            foundParking.description = placemark.description
-            foundParking.image = placemark.image
-            foundParking.lat = placemark.lat
-            foundParking.lng = placemark.lng
-            foundParking.zoom = placemark.zoom
+            foundParking.title = parking.title
+            foundParking.description = parking.description
+            foundParking.image = parking.image
+            foundParking.lat = parking.lat
+            foundParking.lng = parking.lng
+            foundParking.zoom = parking.zoom
         }
         serialize()
     }
 
-    override fun delete(placemark: ParkingModel) {
-        parkings.remove(placemark)
+    override fun delete(parking: ParkingModel) {
+        parkings.remove(parking)
         serialize()
+    }
+
+
+    private fun logAllParkings() {
+        parkings.forEach { Timber.i("$it") }
+    }
+
+    //USER
+    override fun findByUsername(username: String):UserModel? {
+        var foundUser: UserModel? = users.find { p -> p.username == username }
+        if (foundUser != null) {
+            return foundUser
+        }
+        return null
+    }
+    override fun create(user: UserModel):Boolean {
+        var foundUser: UserModel? = users.find { p -> p.username == user.username }
+        if (foundUser == null) {
+            users.add(user)
+            logAllUsers()
+            serializeUsers()
+            return true
+        }else{
+            return false
+        }
+
+
+    }
+    override fun update(user: UserModel) {
+        var foundUser: UserModel? = users.find { p -> p.username == user.username }
+        if (foundUser != null) {
+            foundUser.username = user.username
+            foundUser.password = user.password
+            logAllUsers()
+        }
+        serializeUsers()
+    }
+    override fun delete(user: UserModel) {
+        var foundUser: UserModel? = users.find { p -> p.username == user.username }
+        if (foundUser != null) {
+            users.removeAt(users.indexOf(foundUser))
+            logAllUsers()
+        }
+        serializeUsers()
+    }
+    override fun authenticate(user: UserModel) :UserModel? {
+        var foundUser: UserModel? = users.find { p -> p.username == user.username }
+        if (foundUser != null) {
+            if(foundUser.password == user.password){
+                Timber.i("User: ${user.username} Authenticated")
+                return foundUser;
+            }
+        }
+        Timber.i("User: ${user.username} Rejected")
+        return foundUser;
+    }
+    fun logAllUsers() {
+        users.forEach{ Timber.i("${it}") }
     }
 
     private fun serialize() {
-        val jsonString = gsonBuilder.toJson(parkings, listType)
-        write(context, JSON_FILE, jsonString)
+        val jsonString = gsonBuilder.toJson(parkings, listTypeParking)
+        write(context, JSON_FILE_PARKING, jsonString)
     }
 
     private fun deserialize() {
-        val jsonString = read(context, JSON_FILE)
-        parkings = gsonBuilder.fromJson(jsonString, listType)
+        val jsonString = read(context, JSON_FILE_PARKING)
+        parkings = gsonBuilder.fromJson(jsonString, listTypeParking)
     }
 
-    private fun logAll() {
-        parkings.forEach { Timber.i("$it") }
+    private fun serializeUsers() {
+        val jsonString = gsonBuilder.toJson(users, listTypeUser)
+        write(context, JSON_FILE_USER, jsonString)
     }
+
+    private fun deserializeUsers() {
+        val jsonString = read(context, JSON_FILE_USER)
+        users = gsonBuilder.fromJson(jsonString, listTypeUser)
+    }
+
+
 }
+
+
 
 class UriParser : JsonDeserializer<Uri>,JsonSerializer<Uri> {
     override fun deserialize(
