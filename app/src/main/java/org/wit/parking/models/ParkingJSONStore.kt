@@ -70,6 +70,7 @@ class ParkingJSONStore(private val context: Context) : ParkingStore {
             foundParking.lat = parking.lat
             foundParking.lng = parking.lng
             foundParking.zoom = parking.zoom
+            foundParking.rating = parking.rating
         }
         serialize()
     }
