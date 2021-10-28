@@ -30,20 +30,13 @@
     <string name="menu_back">Back</string>
     <string name="toast_userExist">User already exist</string>
     <string name="title_activity_parking_maps">ParkingMapsActivity</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
-
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="parking_image_placeholder">Parking Image</string>
     <string name="parking_title_placeholder">Parking Title</string>
     <string name="parking_description_placeholder">Parking Description</string>
     <string name="menu_map">Map</string>
     <string name="menu_my_parkings">My Parkings</string>
     <string name="menu_all_parkings">All Parkings</string>
+    <string name="ratingText">Rating: </string>
 
 
 </resources>

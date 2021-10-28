@@ -36,6 +36,7 @@ class ParkingAdapter constructor(private var parkings: List<ParkingModel>, priva
             binding.parkingTitle.text = parking.title
             binding.description.text = parking.description
             binding.username.text = parking.username
+            binding.rating.text = parking.rating.toString()
             Timber.i("image in adapter: ${parking.image}")
             Picasso.get()
                 .load(parking.image)

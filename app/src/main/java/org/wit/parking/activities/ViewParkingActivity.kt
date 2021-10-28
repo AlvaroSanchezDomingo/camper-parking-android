@@ -47,7 +47,7 @@ class ViewParkingActivity : AppCompatActivity() {
             parking = intent.extras?.getParcelable("parking_view")!!
             binding.parkingTitle.setText(parking.title)
             binding.description.setText(parking.description)
-
+            binding.rating.setText(parking.rating.toString())
             Picasso.get()
                 .load(parking.image)
                 .resize(500, 500)

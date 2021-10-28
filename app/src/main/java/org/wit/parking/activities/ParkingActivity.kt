@@ -85,12 +85,16 @@ class ParkingActivity : AppCompatActivity() {
 
 
         app = application as MainApp
+        binding.rating.minValue = 0
+        binding.rating.maxValue = 5
 
         if (intent.hasExtra("parking_edit")) {
             edit = true
             parking = intent.extras?.getParcelable("parking_edit")!!
             binding.parkingTitle.setText(parking.title)
             binding.description.setText(parking.description)
+            binding.rating.value = parking.rating
+
             Picasso.get()
                 .load(parking.image)
                 .resize(500,500)
@@ -104,6 +108,7 @@ class ParkingActivity : AppCompatActivity() {
         binding.btnAdd.setOnClickListener() {
             parking.title = binding.parkingTitle.text.toString()
             parking.description = binding.description.text.toString()
+            parking.rating = binding.rating.value
 
             if (parking.title.isNotEmpty()) {
                 if(edit){
@@ -140,7 +145,7 @@ class ParkingActivity : AppCompatActivity() {
         }
     }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_parking, menu)
+        menuInflater.inflate(R.menu.menu_my_parking, menu)
         return super.onCreateOptionsMenu(menu)
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
