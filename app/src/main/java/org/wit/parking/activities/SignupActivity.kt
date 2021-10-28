@@ -27,7 +27,7 @@ class SignupActivity : AppCompatActivity() {
         binding = ActivitySignupBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.toolbar.title = title
+        binding.toolbar.title = ""
         setSupportActionBar(binding.toolbar)
 
 

@@ -19,30 +19,31 @@ import org.wit.parking.adapters.ParkingListener
 import org.wit.parking.models.ParkingModel
 import timber.log.Timber.i
 
-class ParkingListActivity : AppCompatActivity(), ParkingListener {
+class MyParkingListActivity : AppCompatActivity(), ParkingListener {
 
     lateinit var app: MainApp
     private lateinit var binding: ActivityParkingListBinding
     private lateinit var refreshIntentLauncher : ActivityResultLauncher<Intent>
-    private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
+
+    private lateinit var parkingsIntentLauncher : ActivityResultLauncher<Intent>
 
     private fun registerRefreshCallback() {
         refreshIntentLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult())
             { loadParkings() }
     }
-    private fun registerMapCallback() {
-        mapIntentLauncher =
+
+    private fun registerParkingsCallback() {
+        parkingsIntentLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult())
             {  }
     }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityParkingListBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.toolbar.title = "All Parkings"
+        binding.toolbar.title = "My Parkings"
         setSupportActionBar(binding.toolbar)
 
         app = application as MainApp
@@ -53,26 +54,25 @@ class ParkingListActivity : AppCompatActivity(), ParkingListener {
 
 
         registerRefreshCallback()
-        registerMapCallback()
+        registerParkingsCallback()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_parking_list, menu)
+        menuInflater.inflate(R.menu.menu_my_parking_list, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.item_my_parkings -> {
-                val launcherIntent = Intent(this, MyParkingListActivity::class.java)
+            R.id.item_all_parkings -> {
+                val launcherIntent = Intent(this, ParkingListActivity::class.java)
+                parkingsIntentLauncher.launch(launcherIntent)
+            }
+
+            R.id.item_add -> {
+                val launcherIntent = Intent(this, ParkingActivity::class.java)
                 refreshIntentLauncher.launch(launcherIntent)
             }
-
-            R.id.item_map -> {
-                val launcherIntent = Intent(this, ParkingMapsActivity::class.java)
-                mapIntentLauncher.launch(launcherIntent)
-            }
-
             R.id.item_profile -> {
                 i("item_profile")
                 val launcherIntent = Intent(this, SignupActivity::class.java)
@@ -90,17 +90,18 @@ class ParkingListActivity : AppCompatActivity(), ParkingListener {
     }
 
     override fun onParkingClick(parking: ParkingModel) {
-        val launcherIntent = Intent(this, ViewParkingActivity::class.java)
-        launcherIntent.putExtra("parking_view", parking)
+        val launcherIntent = Intent(this, ParkingActivity::class.java)
+        launcherIntent.putExtra("parking_edit", parking)
         refreshIntentLauncher.launch(launcherIntent)
     }
     private fun loadParkings() {
-        showParkings(app.parkings.findAll())
+        val myParkings = app.parkings.findParkingByUsername(app.loggedInUser!!)
+        showParkings(myParkings!!)
     }
 
-    fun showParkings (parkings: List<ParkingModel>) {
-        i("All parkings $parkings")
-        binding.recyclerView.adapter = ParkingAdapter(parkings, this)
+    fun showParkings (parkings: List<ParkingModel>?) {
+        i("My parkings $parkings")
+        binding.recyclerView.adapter = ParkingAdapter(parkings!!, this)
         binding.recyclerView.adapter?.notifyDataSetChanged()
     }
 

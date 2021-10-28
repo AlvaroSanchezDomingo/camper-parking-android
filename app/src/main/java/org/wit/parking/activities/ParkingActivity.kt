@@ -80,7 +80,7 @@ class ParkingActivity : AppCompatActivity() {
         binding = ActivityParkingBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.toolbar.title = title
+        binding.toolbar.title = "Edit Parking"
         setSupportActionBar(binding.toolbar)
 
 

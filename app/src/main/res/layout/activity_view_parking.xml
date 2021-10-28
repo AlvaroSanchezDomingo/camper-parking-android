@@ -39,69 +39,35 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <EditText
+                <TextView
                     android:id="@+id/parkingTitle"
                     android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:layout_margin="8dp"
-                    android:hint="@string/hint_parkingTitle"
-                    android:inputType="text"
-                    android:maxLength="25"
-                    android:maxLines="1"
+                    android:layout_height="wrap_content"
                     android:padding="8dp"
-                    android:textSize="14sp"
-                    tools:ignore="TouchTargetSizeCheck" />
+                    android:textSize="30sp" />
 
-                <EditText
+                <TextView
                     android:id="@+id/description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:hint="@string/hint_parkingDescription"
-                    android:inputType="text"
-                    android:maxLength="25"
-                    android:maxLines="1"
-                    android:minHeight="48dp"
                     android:padding="8dp"
-                    android:textSize="14sp" />
+                    android:textSize="20sp" />
 
-                <Button
-                    android:id="@+id/chooseImage"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
-                    android:paddingTop="8dp"
-                    android:paddingBottom="8dp"
-                    android:text="@string/button_addImage"
-                    android:textSize="16sp"
-                    tools:ignore="TextContrastCheck" />
                 <ImageView
                     android:id="@+id/parkingImage"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@mipmap/ic_launcher"/>
-                <Button
-                    android:id="@+id/placemarkLocation"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
-                    android:paddingBottom="8dp"
-                    android:paddingTop="8dp"
-                    android:stateListAnimator="@null"
-                    android:text="@string/button_location"
-                    android:textSize="16sp"/>
-                <Button
-                    android:id="@+id/btnAdd"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
-                    android:paddingTop="8dp"
-                    android:paddingBottom="8dp"
-                    android:stateListAnimator="@null"
-                    android:text="@string/button_addParking"
-                    android:textSize="16sp"
-                    tools:ignore="TextContrastCheck" />
+                    app:srcCompat="@mipmap/ic_launcher" />
 
+                <include
+                    android:id="@+id/include"
+                    layout="@layout/content_parking_maps_simple"
+                    android:layout_width="match_parent"
+                    android:layout_height="508dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/parkingImage" />
             </LinearLayout>
         </ScrollView>
 

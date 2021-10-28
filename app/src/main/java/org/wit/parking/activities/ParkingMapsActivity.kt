@@ -12,7 +12,7 @@ import com.squareup.picasso.Picasso
 import org.wit.parking.databinding.ActivityParkingMapsBinding
 import org.wit.parking.databinding.ContentParkingMapsBinding
 import org.wit.parking.main.MainApp
-import org.wit.parking.models.UserModel
+
 
 
 class ParkingMapsActivity : AppCompatActivity(), GoogleMap.OnMarkerClickListener {
@@ -27,6 +27,7 @@ class ParkingMapsActivity : AppCompatActivity(), GoogleMap.OnMarkerClickListener
         binding = ActivityParkingMapsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.toolbar.title = "Parking Locations"
         setSupportActionBar(binding.toolbar)
 
         contentBinding = ContentParkingMapsBinding.bind(binding.root)

@@ -47,6 +47,12 @@ class ParkingJSONStore(private val context: Context) : ParkingStore {
         }
         return null
     }
+
+    override fun findParkingByUsername(username:String): MutableList<ParkingModel>? {
+        val userParking = parkings.filter { p -> p.username == username }
+        return userParking.toMutableList()
+    }
+
     override fun create(parking: ParkingModel) {
         parking.id = generateRandomId()
         parkings.add(parking)
