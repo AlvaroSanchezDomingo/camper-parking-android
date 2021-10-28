@@ -37,6 +37,10 @@
         </activity>
         <activity android:name=".activities.SignupActivity" />
         <activity android:name=".activities.ParkingListActivity" />
+        <activity
+            android:name=".activities.ViewParkingActivity"
+            android:exported="true"/>
+        <activity android:name=".activities.MyParkingListActivity" />
         <activity android:name=".activities.ParkingActivity" />
     </application>
 

@@ -42,6 +42,8 @@
     <string name="parking_title_placeholder">Parking Title</string>
     <string name="parking_description_placeholder">Parking Description</string>
     <string name="menu_map">Map</string>
+    <string name="menu_my_parkings">My Parkings</string>
+    <string name="menu_all_parkings">All Parkings</string>
 
 
 </resources>
